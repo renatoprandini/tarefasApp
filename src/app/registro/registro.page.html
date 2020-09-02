@@ -36,6 +36,8 @@
     <ion-item lines="none">
       <ion-label position="stacked">CPF</ion-label>
       <ion-input
+        [brmasker]="{person: true}"
+        maxlength="14"
         formControlName="cpf"
         type="text"
         placeholder="Digite seu CPF"
@@ -93,6 +95,7 @@
     <ion-item lines="none">
       <ion-label position="stacked">Celular</ion-label>
       <ion-input
+        [brmasker]="{phone: true}"
         formControlName="celular"
         type="text"
         placeholder="Digite seu Celular"
@@ -159,7 +162,11 @@
     </ion-item>
   </form>
 
-  <ion-item (click)="registro()" button class="ion-button-light ion-text-center">
+  <ion-item
+    (click)="registro()"
+    button
+    class="ion-button-light ion-text-center"
+  >
     <ion-label>SALVAR</ion-label>
   </ion-item>
 
