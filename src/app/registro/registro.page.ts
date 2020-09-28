@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Router } from '@angular/router';
 import { CpfValidator } from '../validators/cpf-validator';
-import { ComparacaoValidator } from '../validators/comparacao-validator';
+import { ComparaValidator } from '../validators/comparacao-validator';
 import { UsuariosService } from '../services/usuarios.service';
 import { AlertController } from '@ionic/angular';
 import { Usuario } from '../models/Usuario';
@@ -20,36 +20,37 @@ export class RegistroPage implements OnInit {
 
   public mensagens_validacao = {
     nome: [
-      { tipo: 'required', mensagem: 'O Nome é obrigatório!' },
+      { tipo: 'required', mensagem: 'O campo Nome é obrigatório!' },
       { tipo: 'minlength', mensagem: 'O nome deve ter pelo menos 3 caracteres!' }
     ],
     cpf: [
-      { tipo: 'required', mensagem: 'O CPF é obrigatório!' },
+      { tipo: 'required', mensagem: 'O campo CPF é obrigatório!' },
       { tipo: 'minlength', mensagem: 'O CPF deve ter pelo menos 11 caracteres!' },
       { tipo: 'maxlength', mensagem: 'O CPF deve ter no máximo 14 caracteres!' },
-      { tipo: 'invalido', mensagem: 'CPF invalido!' }
+      { tipo: 'invalido', mensagem: 'CPF inválido' }
     ],
     dataNasc: [
-      { tipo: 'required', mensagem: 'A Data de Nascimento é obrigatória!' },
+      { tipo: 'required', mensagem: 'O campo Data de Nascimento é obrigatório!' }
     ],
     genero: [
-      { tipo: 'required', mensagem: 'O Gênero é obrigatório!' },
+      { tipo: 'required', mensagem: 'Escolha um gênero!' }
     ],
     celular: [
-      { tipo: 'maxlength', mensagem: 'O Celular deve ter no máximo 16 caracteres!' }
+      { tipo: 'minlength', mensagem: 'O celular deve ter pelo menos 10 caracteres!' },
+      { tipo: 'maxlength', mensagem: 'O celular deve ter no máximo 16 caracteres!' }
     ],
     email: [
-      { tipo: 'required', mensagem: 'O Email é obrigatório!' },
-      { tipo: 'email', mensagem: 'O Email deve ser válido!' }
+      { tipo: 'required', mensagem: 'O campo E-mail é obrigatório!' },
+      { tipo: 'email', mensagem: 'E-mail inválido!' }
     ],
     senha: [
-      { tipo: 'required', mensagem: 'O Senha é obrigatória!' },
+      { tipo: 'required', mensagem: 'O campo senha é obrigatório!' },
       { tipo: 'minlength', mensagem: 'A senha deve ter pelo menos 6 caracteres!' }
     ],
     confSenha: [
-      { tipo: 'required', mensagem: 'A Confirmação da Senha é obrigatória!' },
-      { tipo: 'minlength', mensagem: 'A Confirmação da Senha deve ter pelo menos 6 caracteres!' },
-      { tipo: 'comparacao', mensagem: 'Deve ser igual a senha!' }
+      { tipo: 'required', mensagem: 'É obrigatório confirmar a senha!' },
+      { tipo: 'minlength', mensagem: 'A senha deve ter pelo menos 6 caracteres!' },
+      { tipo: 'comparacao', mensagem: 'Deve ser igual a Senha!' }
     ],
   };
 
@@ -69,13 +70,13 @@ export class RegistroPage implements OnInit {
       senha: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
       confSenha: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
     }, {
-      validator: ComparacaoValidator('senha', 'confirmaSenha')
+      validator: ComparaValidator('senha', 'confSenha')
     });
   }
 
   async ngOnInit() {
     await this.usuariosService.buscarTodos();
-    console.log(this.usuariosService.listaUsuarios)
+    console.log(this.usuariosService.listaUsuarios);
   }
 
   public async salvarFormulario() {
@@ -84,7 +85,7 @@ export class RegistroPage implements OnInit {
       let usuario = new Usuario();
       usuario.nome = this.formRegistro.value.nome;
       usuario.cpf = this.formRegistro.value.cpf;
-      usuario.dataNascimento = new Date(this.formRegistro.value.dataNascimento);
+      usuario.dataNasc = new Date(this.formRegistro.value.dataNascimento);
       usuario.genero = this.formRegistro.value.genero;
       usuario.celular = this.formRegistro.value.celular;
       usuario.email = this.formRegistro.value.email;

@@ -1,7 +1,7 @@
 export class Usuario {
     nome: string;
     cpf: string;
-    dataNascimento: Date;
+    dataNasc: Date;
     genero: string;
     celular: string;
     email: string;

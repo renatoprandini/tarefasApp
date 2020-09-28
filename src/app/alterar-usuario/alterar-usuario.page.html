@@ -1,17 +1,14 @@
-<ion-content color="primary" [fullscreen]="true">
-  <div class="ion-text-center">
-    <img src="assets/etec2.png" alt="Etec" />
-  </div>
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Alterar</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-  <ion-item class="ion-text-center ion-button-light">
-    <ion-label> NOVO USUÁRIO </ion-label>
-  </ion-item>
-
-  <ion-item-divider color="primary">
-    <ion-label> Digite seus dados </ion-label>
-  </ion-item-divider>
-
-  <form [formGroup]="formRegistro">
+<ion-content>
+  <form [formGroup]="formAlterar">
     <ion-item lines="none">
       <ion-label position="stacked">Nome</ion-label>
       <ion-input
@@ -22,7 +19,7 @@
       <ng-container *ngFor="let erro of mensagens_validacao.nome">
         <span
           class="msg-erro"
-          *ngIf="formRegistro.get('nome').hasError(erro.tipo) && (formRegistro.get('nome').dirty || formRegistro.get('nome').touched)"
+          *ngIf="formAlterar.get('nome').hasError(erro.tipo) && (formAlterar.get('nome').dirty || formAlterar.get('nome').touched)"
         >
           {{erro.mensagem}}
         </span>
@@ -36,12 +33,13 @@
         maxlength="14"
         formControlName="cpf"
         type="text"
+        readonly
         placeholder="Digite seu CPF"
       ></ion-input>
       <ng-container *ngFor="let erro of mensagens_validacao.cpf">
         <span
           class="msg-erro"
-          *ngIf="formRegistro.get('cpf').hasError(erro.tipo) && (formRegistro.get('cpf').dirty || formRegistro.get('cpf').touched)"
+          *ngIf="formAlterar.get('cpf').hasError(erro.tipo) && (formAlterar.get('cpf').dirty || formAlterar.get('cpf').touched)"
         >
           {{erro.mensagem}}
         </span>
@@ -53,17 +51,16 @@
       <ion-datetime
         formControlName="dataNasc"
         displayFormat="DD/MM/YYYY"
-        placeholder="Selecione"
-        cancelText="Cancelar"
         doneText="OK"
-      >
-      </ion-datetime>
+        cancelText="Cancelar"
+        placeholder="Selecione"
+      ></ion-datetime>
       <ng-container *ngFor="let erro of mensagens_validacao.dataNasc">
         <span
           class="msg-erro"
-          *ngIf="formRegistro.get('dataNasc').hasError(erro.tipo) && (formRegistro.get('dataNasc').dirty || formRegistro.get('dataNasc').touched)"
+          *ngIf="formAlterar.get('dataNasc').hasError(erro.tipo) && (formAlterar.get('dataNasc').dirty || formAlterar.get('dataNasc').touched)"
         >
-          {{ erro.mensagem }}
+          {{erro.mensagem}}
         </span>
       </ng-container>
     </ion-item>
@@ -82,7 +79,7 @@
       <ng-container *ngFor="let erro of mensagens_validacao.genero">
         <span
           class="msg-erro"
-          *ngIf="formRegistro.get('genero').hasError(erro.tipo) && (formRegistro.get('genero').dirty || formRegistro.get('genero').touched)"
+          *ngIf="formAlterar.get('genero').hasError(erro.tipo) && (formAlterar.get('genero').dirty || formAlterar.get('genero').touched)"
         >
           {{erro.mensagem}}
         </span>
@@ -100,7 +97,7 @@
       <ng-container *ngFor="let erro of mensagens_validacao.celular">
         <span
           class="msg-erro"
-          *ngIf="formRegistro.get('celular').hasError(erro.tipo) && (formRegistro.get('celular').dirty || formRegistro.get('celular').touched)"
+          *ngIf="formAlterar.get('celular').hasError(erro.tipo) && (formAlterar.get('celular').dirty || formAlterar.get('celular').touched)"
         >
           {{erro.mensagem}}
         </span>
@@ -112,61 +109,24 @@
       <ion-input
         formControlName="email"
         type="email"
+        readonly
         placeholder="Digite seu E-mail"
       ></ion-input>
       <ng-container *ngFor="let erro of mensagens_validacao.email">
         <span
           class="msg-erro"
-          *ngIf="formRegistro.get('email').hasError(erro.tipo) && (formRegistro.get('email').dirty || formRegistro.get('email').touched)"
+          *ngIf="formAlterar.get('email').hasError(erro.tipo) && (formAlterar.get('email').dirty || formAlterar.get('email').touched)"
         >
           {{erro.mensagem}}
         </span>
       </ng-container>
     </ion-item>
+    
+    <ion-button expand="full" (click)="salvar()">
+      SALVAR
+    </ion-button>   
 
-    <ion-item lines="none">
-      <ion-label position="stacked">Senha</ion-label>
-      <ion-input
-        formControlName="senha"
-        type="password"
-        placeholder="Escolha uma senha"
-      ></ion-input>
-      <ng-container *ngFor="let erro of mensagens_validacao.senha">
-        <span
-          class="msg-erro"
-          *ngIf="formRegistro.get('senha').hasError(erro.tipo) && (formRegistro.get('senha').dirty || formRegistro.get('senha').touched)"
-        >
-          {{ erro.mensagem }}
-        </span>
-      </ng-container>
-    </ion-item>
-
-    <ion-item lines="none">
-      <ion-label position="stacked">Confirme a Senha</ion-label>
-      <ion-input
-        formControlName="confSenha"
-        type="password"
-        placeholder="Conforme a sua senha"
-      ></ion-input>
-      <ng-container *ngFor="let erro of mensagens_validacao.confSenha">
-        <span
-          class="msg-erro"
-          *ngIf="formRegistro.get('confSenha').hasError(erro.tipo) && (formRegistro.get('confSenha').dirty || formRegistro.get('confSenha').touched)"
-        >
-          {{erro.mensagem}}
-        </span>
-      </ng-container>
-    </ion-item>
-
-    <ion-item
-      (click)="salvarFormulario()"
-      button
-      class="ion-button-light ion-text-center"
-    >
-      <ion-label>SALVAR</ion-label>
-    </ion-item>
-
-    <ion-button expand="full" fill="clear" color="light" routerLink="/login">
+    <ion-button expand="full" fill="clear" routerLink="/configuracoes">
       VOLTAR
     </ion-button>
   </form>

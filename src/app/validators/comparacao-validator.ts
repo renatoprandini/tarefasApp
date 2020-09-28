@@ -1,7 +1,7 @@
 import { FormGroup } from '@angular/forms';
 
 // Validador customizado para comparar dois campos
-export function ComparacaoValidator(controleNome: string, comparacaoNome: string) {
+export function ComparaValidator(controleNome: string, comparacaoNome: string) {
     return (formGroup: FormGroup) => {
         // Pega os campos conforme os nomes que foram passados
         const controle = formGroup.controls[controleNome];
